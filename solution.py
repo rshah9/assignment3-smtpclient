@@ -13,27 +13,27 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.connect(mailserver, port)
 
     recv = clientSocket.recv(1024).decode()
-    recv = recv.decode()
-    print(recv)
-    #print(recv) #You can use these print statement to validate return codes from the server.
-    if recv[:3] != '220':
-        print('220 reply not received from server.')
+    # recv = recv.decode()
+    # print(recv)
+    # print(recv) #You can use these print statement to validate return codes from the server.
+    # if recv[:3] != '220':
+    #    print('220 reply not received from server.')
 
     # Send HELO command and print server response.
     heloCommand = 'HELO Alice\r\n'
     clientSocket.send(heloCommand.encode())
     recv1 = clientSocket.recv(1024).decode()
-    print("HELO Alice: " + recv1)
-    if recv1[:3] != '250':
-        print('250 reply not received from server.')
+    # print("HELO Alice: " + recv1)
+    # if recv1[:3] != '250':
+    #    print('250 reply not received from server.')
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
     mailFromCommand = "MAIL FROM:<rgene2@gmail.com>\r\n"
     clientSocket.send(mailFromCommand.encode())
     recv2 = clientSocket.recv(1024).decode()
-    recv2 = recv2.decode()
-    print("MAIL FROM: " + recv2)
+    # recv2 = recv2.decode()
+    # print("MAIL FROM: " + recv2)
     # Fill in end
 
     # Send RCPT TO command and handle server response.
@@ -41,7 +41,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     rcptToCommand = "RCPT TO:<ramalaxmishah@gmail.com>\r\n"
     clientSocket.send(rcptToCommand.encode())
     recv3 = clientSocket.recv(1024).decode()
-    print("RCPT TO: " + recv3)
+    # print("RCPT TO: " + recv3)
     # Fill in end
 
     # Send DATA command and handle server response.
@@ -50,27 +50,30 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientSocket.send(data.encode())
     recv4 = clientSocket.recv(1024).decode()
     # recv4 = recv4.decode()
-    print("DATA: " + recv4)
+    # print("DATA: " + recv4)
     # Fill in end
 
     # Send message data.
     # Fill in start
+    subject = "Subject: Test Message\r\n"
     clientSocket.send(msg.encode())
+    msgData = "This is a test message.\r\n"
+    clientSocket.send(msgData.encode())
     # Fill in end
 
     # Message ends with a single period, send message end and handle server response.
     # Fill in start
     clientSocket.send(endmsg.encode())
-    recv_msg = clientSocket.recv(1024).decode()
-    print("DATA " + recv_msg.decode())
+    recv5 = clientSocket.recv(1024).decode()
+    # print("DATA " + recv_msg.decode())
     # Fill in end
 
     # Send QUIT command and handle server response.
     # Fill in start
     quit = "QUIT\r\n"
     clientSocket.send(quit.encode())
-    recv5 = clientSocket.recv(1024).decode()
-    print("QUIT " + recv5.decode)
+    recv6 = clientSocket.recv(1024).decode()
+    # print("QUIT " + recv6.decode)
     # Fill in end
 
 
